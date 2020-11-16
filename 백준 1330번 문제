@@ -1,0 +1,64 @@
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+
+★ if문으로 연습 ★
+
+
+import java.util.Scanner;
+
+public class Main {
+	//class 첫문자가 대문자
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		
+		if ( a>b ) {
+			System.out.println(">");
+		} else if ( a<b ) {	
+			System.out.println("<");
+		} else {
+			System.out.println("==");
+		}
+		
+		
+		
+		
+	}		
+}
+
+
+
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+
+★ 삼항연산자로 연습★
+
+
+
+import java.util.Scanner;
+
+public class Main {
+	//class 첫문자가 대문자
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		
+		if ( a>b ) {
+			System.out.println(">");
+		} else if ( a<b ) {	
+			System.out.println("<");
+		} else {
+			System.out.println("==");
+		}
+		
+		
+		
+		
+	}		
+}
