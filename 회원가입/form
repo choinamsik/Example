@@ -1,0 +1,148 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>회원가입 페이지</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<style>
+			
+			body{background-image: url('/javaweb/picture/two.jpg');
+				display: flex;
+				justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-size: cover;
+			}
+			form{position: relative; z-index:2;}
+			h2{color:rgb(255, 255, 255); 
+				text-shadow: 3px 3px 3px gray;
+				font-weigth:bold;}
+			label{color:white; font-weigth:bold;}
+			
+			
+	</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+function user_join() {
+	var userid = $('input[name=userid]').val();
+	var userpw = $('input[name=userpw]').val();
+	var user_repw = $('input[name=user_repw]').val();
+	var usename = $('input[name=usename]').val();
+	var usergender = $('input[name=usergender]:checked').val();
+	var usermail = $('input[name=usermail]').val();
+	
+	var email_check = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/ig; 
+	var name_check =/[a-zA-Z]/g;
+	var id_check = /\s/g;
+	var pw_check = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,20}$/g;
+	
+	if(userpw != user_repw) {
+		alert("비밀번호가 맞지 않습니다.");
+		return false;
+	}
+	
+	if(!id_check.test(id)) {
+		alert("ID입력란을 다시 확인해주세요.");
+		return false;
+	}
+	if(!email_check.test(usermail)) {
+		alert("메일형식을 다시 확인해주세요.");
+		return false; 
+	}
+	if(!name_check.test(usename)) {
+		alert("이름을 다시 확인해주세요.");
+		return false;
+	} 
+	if(!pw_check.test(userpw)) {
+		alert("비밀번호를 다시 확인해주세요.");
+		return false;
+	}
+	
+	$.ajax({
+		url : "회원가입 jsp",
+		method : "post",
+		data : {"cmd":"값"},
+		dataType : "text",
+		success : function(result) {
+			
+		},
+		error : function(error) {
+			
+		}
+	}); 
+	
+
+}
+</script>
+</head>
+<body>
+
+
+
+
+
+
+<form action="/javaweb/ucl" method="post" style="width:350px;">
+	
+	<h2>회원가입 화면</h2>
+	
+	 		 <div>
+		     	<input type="text" name="userid" class="form-control" id="id" placeholder="아이디">
+		     </div>
+	 		 
+	  
+			<div> 
+			   <input type="text" name="userpw" class="form-control" id="PW" placeholder="비밀번호">
+			  </div>
+			  
+			   <div>		
+			   <input type="text" name="user_repw" class="form-control" id="PW" placeholder="비밀번호 재확인">
+			  </div>
+			  
+			  <div>			 
+			   <input type="text" name="usename" class="form-control" id="PW" placeholder="이름">
+			  </div>
+			  
+			  <div>
+				<label>남성</label>	
+				<input type="radio" name="usergender" autocomplete="off" value="남성" checked="checked">
+				<label>여성</label>
+				<input type="radio" name="usergender" autocomplete="off" value="여성">
+			  </div>
+			  
+			  
+			   <div>
+			   <input type="text" name="usermail" class="form-control" id="PW" placeholder="이메일">
+			  </div>
+			  
+			  <div style="margin-top: 5px;">	
+				<input type="button" class="btn btn-primary btn-sm btn-block" value="회원가입" onclick="user_join();">
+				<input type="reset" class="btn btn-default btn-sm btn-block" value="취소" onclick="user_join();">
+			</div>
+  
+</form>
+
+
+
+
+
+
+
+
+
+	
+
+
+
+</body>
+</html>
