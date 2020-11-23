@@ -1,0 +1,111 @@
+	결제요청하면 로그인여부 확인
+	통과하면 장바구니 물건정보를 order 테이블에 저장한다.
+	통과를 못하면 로그인하도록 메세지 보여주고 form으로 이동해주기
+	로그인에 성공하면 다시 장바구니보기로 이동
+
+
+상품을 고르고 사려면 로그인폼으로 돌려보내고 로그인하면 장바구니에 담긴걸 기억되게 
+그리고 book이면 book usb면 usb
+
+
+익명함수
+var a = function() {
+}
+a();
+선언함수
+
+function aaa() {
+}
+
+
+
+
+
+
+
+
+
+
+order 테이블 따로 품목 테이블 따로 
+order 주문번호   품목 주문번호 
+
+FOREIGN로 관계를 지어준다.
+
+order_td (ordnum, uid, date, totalprice)  구매 횟수 now() 총금액
+
+
+order_item(ordnum, category, itemname, unitprice, qty) 구매 품목 
+
+FOREIGN KEY(ordnum) REFERENCES order(ordnum)  >>> order_item에 들어가야함 왜냐면 order_td을 참조할꺼니깐
+
+
+
+order_item에게만 적용(여러행을 저장할때 사용하기 때문에 for문)
+String query = "INSERT INTO  Employee (empld, name) values (?,?)";  
+ ?에 psINT or String 1과2가 들어가고 Employee는 해당 테이블을 적어준다.
+
+ 
+ps = con.preparsStatement(query);
+for(int i=0; i<.list.size(); i++) {
+	ps.setInt(1,i);
+	ps.setString(2, "Name" +i);
+	ps.executeUpdate();(1,i);
+}
+
+
+ Transaction 처리 
+ -DB에서 한꺼번에 처리해야 할 작업단위 
+ 
+OrderDAO는 UserDOA에서 필요한거 복붙한다.
+
+
+장바구니 비울때 사용↓↓↓↓
+Connection conn = getCon();
+
+conn.setAutoCommit(false);   // 데이터베이스에 자동으로 영구 저장 뜻은 
+자동으로 commit(false)안한다는 뜻 개발자가 수동으로하라는 뜻.
+conn.prepareStatement(sql);
+try{
+   for(int i=0; i<5; i++)
+     ps.setInt(1,100); 
+     ps.executeUpdate();  여러번 돌려도 commit(false)라 자동으로 기록을 안해준다.
+  }
+    commit   <<< 에러가 안나면 여기까지 돌아가니깐 
+}catch(Exception e){
+    rollback   <<< 에러가 나면 
+} finally {
+   connsetAutoCommit(true); 다른곳에서 사용하려면 true로 해 놓고 쓴다.   
+   conn.close();
+}
+
+
+conn.commit();    잘돌아가다가 오류가 안나면commit으로 영구 적용한다.
+ 여기서가 수동으로 저장해줘라는 메세지 
+conn.rollback();    돌아가다가 오류가 나면 여태까지 해온거 다시 롤백한다.
+connsetAutoCommit(true);  <<<< 처음에 conn.setAutoCommit(false)를 true로 복구해준다.
+true는 한 문장단위로 transaction 자동으로 진행되는게 true상태이다.(기본으로 true로 되어있다)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
