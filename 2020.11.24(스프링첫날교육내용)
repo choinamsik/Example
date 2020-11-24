@@ -1,0 +1,206 @@
+Spring Farmework
+   - Java Web 프로젝트를 위한 MVC 패턴의 골격
+   - 서블릿 내장(DispatcherServlet)
+   - DAO, VO, Service, View(JSP)
+   - 위에 있는 D,V,S,V 컴포넌트를 규격화한다.
+   - Eclipse, STS>> 찾아서 이클립스에 내장시켜야한다.
+   - Business Logic : DataAccess(DAO), Presentation(View) 로직을 제외한 로직을 비즈니스 로직    이라한다. (데이터베이스 및 화면에 출력되는 담당구역)
+
+
+   - @Controller @Service @Repository @Resource
+   - @ModelAttribute @RequestParameter @SessionAttribute @Valid
+   - @ResponseBody @RequsetBody @RestController @NonNull.
+   - @RequestMapping @getMapping @PostMapping @PutMapping
+   - @DeleteMapping ★@Autowire @PathVariable 
+   - 위에 있는것들을 사용하는데 파라미터안에 들어가는것과 각 용도에 맞는 로직들이 있다.
+          Dependency Injection(의존성주입)
+   - ★@Autowire : 자동으로 해당 객체의 인스턴스 생성 할당 
+		new를 쓰지않고 객체를 생성하지 않아도 된다는 뜻.
+
+   
+   - Eclipse에 STS 플러그인을 설치한다.
+     Help  >>>  Eclipse Marketplace  >>>  STS입력  >>>  Spring Tools 4 설치 
+
+     헤로쿠(사이트) >>> 클라우드 오픈 대여 웹사이트 
+     어떤 언어든지 지원이 가능한 사이트
+
+
+     ★★★프로젝트 관련 내용 예시
+    빅데이터 관련 빅데이터 업로드하면 빅데이터 분석하여 차트가 나오는 식
+    CSE파일을 웹으로 돌렸을떄 내가 만든 프로그램으로 분석하고 다음수치를 차트로 분석하여 
+    보여주는...등  >>> 웹사이트 + 빅데이터 
+    ★사업성이 돋보이거나 국가에 필요한 혁신적 아이디어가 프로그램을 탄생시킬 생명★
+    
+    
+
+   - 스프링을 활용한 파일생성
+     NEW  >>  other >>  Spring Boot  >>  Spring Starter Project  >>  
+
+     Group :  그룹이름 
+     Artifact : 프로젝트 ID   
+
+     POM ( Project Object Model )  >>  프로젝트 설정파일 >> <dependencie>의 의미는 이 곳     에 의존한다는 의미 
+      
+      com.exmaple.dame   >>>  DemoApplication.java   >>>  
+      DemoApplication클래스를 실행시키면 그 안에있는 main 메서드인 
+      main이 돌아간다면 톰캣도 돌아가고 톰캣이 돌아가면 웹브라우저가 돌아가고 
+      Server.port=80
+      src  >>  main  >>  resources >>  application.properties  >>  들어가면 아무것도 안적혀
+      있는데 변경할 포트번호를 지정해주면 포트 변경이 된다.
+      server.port=80을 입력한후 저장 후 다시   DemoApplication.java로 가서 실행하면 콘솔창에
+      : Tomcat started on port(s): 80 (http) with context path '' 라고 나오면 변경 성공한것.
+
+     
+
+     Plain Object java Object( POJO ) 의존성이 없는 평범한 일반 클래스를 POJO클래스라 한다.
+     
+  ◈RestController란 테스트를 할때 사용하는데 그냥 Controller보다 더 성능및 기능이 더 좋아 
+     테스트를 할때 많이 사용한다.
+  
+   라이브러리 설정
+   1.라이브러리 설정  2.위치설정  3.jsp 만들기
+ 
+ ◈1.라이브러리 설정
+
+    pom.xml로가서 
+
+   <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+       <artifactId>tomcat-embed-jasper</artifactId>
+       <scope>provided</scope>
+   </dependency>
+		
+   <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+   </dependency>
+</dependencies>   <<< 안에 넣어줘야한다.
+
+
+◈ 2.위치설정
+   
+    application.properties로 가서 아래 글을 작성  
+
+   Spring.mvc.view.prefix=/WEB-INF/jsp/
+   Spring.mvc.view.suffix=.jsp
+
+
+◈3.jsp 만들기
+   
+   메뉴에서 webapp  >>> WEB-INF 파일생성  >>>  jsp 파일생성  >>> 임의 jsp파일생성(index.jsp)
+   
+
+
+
+@Controller         >>> View
+return "hello";
+
+
+
+
+
+ajax사용시  클래스에는 @Controller 메소드에는 @ReponseBody / @PostMapping("ajax_req")를 넣어준다.
+
+@Controller       
+
+@ReponseBody    >>>리턴되는 값이 ReponseBody >> 화면에 보여지는 응답데이터
+@PostMapping("ajax_req")
+public String aa(){
+   return "hello";    <<화면에 보여지는 응답데이터
+}
+
+
+
+
+@RestController  >>> 문자열
+return "hello";
+
+ajax_test  << 페이지에서 숫자를 클릭하면 그 숫자에 해당하는 구구단이 이 페이지에 뜨게하기
+
+
+
+
+
+
+javascript 함수는
+익명 함수
+function ()
+
+선언식 함수 function aad()
+
+
+<form>을 보내는 방식
+폼에 유저 정보를 보낼때
+
+input생략
+@Controller
+<form action="user" method="post"
+	num=11
+	name='Lams'
+	phone='010-7532-6698'
+	email='gkdl@naver.com'
+	<button type="submit"> 저장 </button>
+</form>
+@ResponseBody   >> http의 html인 부분을 바로 보여주겠다는 의미
+@PostMapping("user")
+public String saveUser(@MadelAttribtue UserVO u)){
+  return u.toString();
+}
+
+
+폼만들고 
+vo만들고
+위에 작성
+
+웹브라우저에서는 putMapping과 deleteMapping를 지원하지 않아서
+그러면 ajax로 사용이 가능해서 ajax로 사용한다.
+
+
+추상적메소드
+
+public inerface UserDAO() {
+
+  boolean insert(UserVO u);
+  boolean select(int num);
+  boolean update(UserVO u);
+  boolean delete(int num);
+}
+
+메소드 헤드만 있고 바디가 없다. 
+기능이 구체화되지 않았다고 해서 추상메소드라고 한다.
+기능으로는 UserDAO를 구현해서 mysql에 저장할 수 있고 여러개의 아류저장용을 만들어 낼 수 있다. 몽고디비든 오라클이든 마이에스큐엘이든 
+
+
+
+
+
+
+
+
+@Autowired
+            DAO에서 상속받은 객체에 @Repository를 선언함으로써 ID값을 달아주고 
+	Controller로 넘어와서  @Qualifier로 ID값을 받으면 그 받은 ID값의
+	기능들 즉, 그 해당 메소드의 기능들을 쓸 수 있으며  @Autowired를
+	선언함으로써 객체를 생성하지않고 자식클래스의 기능들을 매칭해주는
+	역할을 한다.	  
+
+@Qualifier
+	DAO에서 상속받은 클래스에 @Repository로 ID값을 주고 그 ID값을 받은걸
+	Controller에서 @Qualifier를 사용하여@Autowired가 기능을 할 수 있도록 
+   	ID값을 넣어준다. @Qualifier는 bean이 여러개일 경우
+	Annotation에 id를 입력함으로써 주입 될 bean을 지정함으로써 해결할 수 있다.
+ 
+@Repository
+	DAO에서 부모에게 상속받은 자식에게 ID값을 부여함으로써 Controller에서 
+	@Qualifier에게 ID값을 입력 받은 뒤 @Autowired가 자동매칭할 수 있게 만
+	들어준다.
+
+@ResponseBody
+	RestController와 같은 기능이고 문자열 그대로 출력하기 위함이다 
+	왜냐하면 Controller는 문자열이 아닌 그 객체이름의 파일을 내보내기 때문이고
+	문자열로 웹브라우저에 출력이 되지않으므로 Controller를 사용할때 문자열을 그대로
+	 출력하고 싶으면ResponseBody를 사용한다.
+
+
+
+
