@@ -1,0 +1,15 @@
+package com.example.demo.dao;
+
+import com.example.demo.controller.UserVO;
+
+public interface UserDAO {
+
+	
+	  boolean insert(UserVO u);
+	  boolean select(int num);
+	  boolean update(UserVO u);
+	  boolean delete(int num);
+	  
+	  
+	  
+}
