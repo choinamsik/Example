@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		
+		
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		
+
+<!--   -->
+<style>
+
+			  body{background-image: url('/demo/src/main/webapp/images/two.jpg');
+					display: flex;       
+					justify-content: center; 
+	                align-items: center;
+	                height: 100vh;
+	                background-size: cover;
+					}
+				form{position: relative; z-index:2;}
+				h2{color:rgb(255, 255, 255); 
+					text-shadow: 3px 3px 3px gray;
+					font-weigth:bold;}
+				label{color:white; font-weigth:bold;}
+
+</style>
+
+
+
+	<script>
+		function test(method,num){	
+			$.ajax({
+				url : "user",     
+				method:method,
+				data : {'num' : num},
+				dataType : 'text',
+				success : function(res) {
+					alert(res);
+				},
+				error : function(error){
+					alert(err);
+				}
+			});
+		}  
+		
+		
+	
+		
+		
+	</script>
+
+
+
+
+
+
+</head>
+<body>
+
+	<h2>회원정보 입력</h2>
+	<form id=input action="user" method="post" class="form-horizontal">
+		<div class="form-group">
+			<input type="text" class="form-control" name="num" placeholder="번호" autocomplete="off" >
+		</div>		
+		<div class="form-group">
+			<input type="text" class="form-control" name="name" placeholder="이름" autocomplete="off">
+		</div>	
+		<div class="form-group">
+			<input type="text" class="form-control" name="phone" placeholder="휴대전화" autocomplete="off" >
+		</div>	
+		<div class="form-group">
+			<input type="text" class="form-control" name="email" placeholder="이메일" autocomplete="off">
+		</div>	
+		<div class="form-group">
+			<button type="submit" class="form-control" >저장</button>
+		</div>	
+
+	</form>
+	
+		<div>
+			<a href="javascript:test('put' ,11);">수정</a>
+			<a href="javascript:test('delete' ,11);">삭제</a>	
+		</div>
+</body>
+</html>
