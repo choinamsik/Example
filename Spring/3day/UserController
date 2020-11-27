@@ -1,0 +1,89 @@
+package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.example.demo.dao.UserDAO;
+
+
+@Controller   //RestController를 선언하면 밑에 결과 값 만 호출하겠다는 의미 
+public class UserController {
+
+	private UserDAO userDao; /**/
+	
+	@Autowired  /* Autowired 생성자라 부르고 */
+	public UserController(@Qualifier("fileDAO") UserDAO dao) { 
+		this.userDao = dao;
+	}  /* 이 함수가 위에 있는 userDao로 들어간다 */
+		/* @Qualifier는 bean이 여러개일 경우Annotation에
+		 * id를 입력함으로써 주입 될 bean을 지정함으로써 해결할 수 있다.*/
+	
+	@GetMapping("user")
+	public String user_form() {
+		return "user_input";
+	}
+	
+	
+	
+	@RequestMapping(value = "user")
+	public @ResponseBody String user_save(@ModelAttribute UserVO u) {	
+		return userDao.insert(u)+""; 
+		/* 위에서 " ";는 boolean으로 대답을 하면 true 또는 false가 나오는데 그 것을 문자열로 웹브라우저에 
+		 * 출력하여 사용자 또는 개발자가 보기 위함의 기능이다. */
+		/* u.toString(); 대신에 svc.insert(u); 들어가야한다.*/
+		/* 여기서의 ResponseBody의 역할은 return 하고있는 insert가 UserDAO에서 
+		 * Boolean으로 사용되기 때문에 true인지 false인지를 반환하라는 뜻이다. */
+	}			
+	
+	@ResponseBody /* RestController와 같은 기능이고 문자열 그대로 출력하기 위함이다 
+	 				왜냐하면 Controller는 문자열이 아닌 그 객체이름의 파일을 내보내기 때문이고
+	 				문자열로 웹브라우저에 출력이 되지않으므로 Controller를 사용할때 문자열을 그대로
+	 				출력하고 싶으면ResponseBody를 사용한다. */
+	@PutMapping("user")
+	public String user_update(@RequestParam("num")int num) {
+		return "수정대상 번호:"+num;
+	}
+	
+	@ResponseBody
+	@DeleteMapping("user")
+	public String user_delete(@RequestParam("num")int num) {
+		return "삭제대상 번호:"+num;
+	}
+	
+	
+	@GetMapping("/user/list")
+	public String user_list_get(Model model) {
+		model.addAttribute("userlist",userDao.user_list());
+		return "user_list";
+	}
+	
+	@PostMapping("/user/list")
+	public @ResponseBody String user_list_post(@RequestParam(value = "user_num") int user_num) {
+		ModelAndView mav = new ModelAndView(); 
+		return "gi.jpg";
+	}
+	
+	
+	@RequestMapping(value = "/user/list_page")
+	public String user_list(String userId, Model model) {
+//		model.addAttribute("getuser" , (userId));
+		System.out.print("사용자 리스트가 요청되었습니다.");
+		return "user_list";	
+	}
+	
+	
+
+	
+}	
+
