@@ -1,0 +1,77 @@
+package com.example.demo.controller;
+
+public class UserVO {
+
+	private int num;
+	private String name;
+	private String phone;
+	private String email;
+	private String file_name;
+	
+	
+	
+	@Override
+	public String toString() {
+		return String.format("번호: %d<br> 이름: %s<br> 전화: %s<br> 메일: %s<br>",
+								num,name,phone,email);
+	}
+	
+	
+	
+	
+	public UserVO(int num, String name, String phone, String email, String file_name) {
+		this.num = num;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.file_name = file_name;
+	}
+	
+	
+	
+	public UserVO(int int1, String string, String string2, String string3) {
+		
+	}
+	
+	
+
+	public UserVO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	
+	
+	
+	
+}
