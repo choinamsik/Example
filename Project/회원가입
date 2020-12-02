@@ -1,0 +1,418 @@
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+controller
+
+
+
+package com.example.demo.project;
+
+import java.io.File;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.vo.FreeboardVO;
+import com.example.demo.vo.ProjectUserVO;
+
+
+
+@Controller
+@RequestMapping("/")
+public class FreeBoardController {
+
+	@Autowired
+	private  ProjectMapper projectMapper;
+	@Autowired
+	private  FreeboardMapper freeboardmapper;
+	
+	@GetMapping("/main")
+	public String main() {
+		
+		return "freeboard_main";
+	}
+			
+	@GetMapping("/join")
+	public String join() {
+		
+		return "freeboard_join";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		
+		return "freeboard_login";
+	}
+	
+	@GetMapping("/writer")
+	public String writer() {
+		
+		return "freeboard_writer";
+	}
+	
+	@GetMapping("/list")
+	public String showlist(Model model) {
+		List<FreeboardVO> boardlist = freeboardmapper.getBoardList();
+		
+		model.addAttribute("BoardList", boardlist);
+		return "freeboard_list";
+	}
+	
+	@GetMapping("/detail")
+	public String showdetail() {
+		
+		return "freeboard_detail";
+	}
+	
+	
+	
+	
+	@PostMapping("/fb/upload")
+	@ResponseBody
+	public String upload(@RequestParam("files")MultipartFile[] mfiles,
+			HttpServletRequest request,
+			@RequestParam("author")String author) {
+		ServletContext context = request.getServletContext();
+		String savePath = context.getRealPath("/WEB-INF/upload");
+		try{
+			for(int i=0; i<mfiles.length; i++) {
+				mfiles[i].transferTo(
+					new File(savePath + "/" + mfiles[i].getOriginalFilename()));
+				
+				 //MultipartFile 주요 메소드
+				  String cType = mfiles[i].getContentType();
+				  String pName = mfiles[i].getName();
+				  Resource res = mfiles[i].getResource();
+				  long fSize = mfiles[i].getSize();
+				  boolean empty = mfiles[i].isEmpty();
+				 
+			}
+			String msg = String.format("파일(d%)저장성공(작성자:%s)", mfiles.length,author);
+			return msg;
+		} catch (Exception e){
+			e.printStackTrace();
+			return "파일 저장 실패";
+		}
+		
+	}
+		
+	
+
+	
+	@PostMapping(value = "/user/join")
+	public @ResponseBody boolean boardJoin(@ModelAttribute ProjectUserVO vo) {
+		int join_res = projectMapper.insertUser(vo);
+		if(join_res > 0) {
+			return true;	
+		} else {
+			return false;
+		}
+		
+	} 
+
+	@PostMapping(value = "/user/login")
+	public @ResponseBody boolean boardLogin(@ModelAttribute ProjectUserVO vo, HttpSession session) {
+		ProjectUserVO login_res = projectMapper.loginUser(vo);
+		if(login_res != null) {
+			session.setAttribute("loginUserData", login_res);
+			return true;	
+		} else {
+			return false;
+		}
+	}
+  
+  
+	★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+	
+	JSP
+	
+	
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입 페이지</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+        a { text-decoration: none; color: black; }
+	    a:visited { text-decoration: black; }
+	    a:focus { text-decoration: black; }
+	    a:hover { color: black; }
+	    a:hover, a:active { text-decoration: black; }
+</style>
+
+
+<script type="text/javascript">
+
+function join() {
+
+	var data = {};
+	var user_id = $("#UserID").val();
+	var Password = $("#Password").val();
+	var confirm = $("#confirm").val();
+	var UserName = $("#UserName").val();
+	
+	if(user_id == null || user_id == "") { 
+		alert("ID를 입력하세요");
+		return false;
+	} else if(Password == null || Password == "") {
+		alert("Password를 입력하세요.");
+		return false;
+	} else if(confirm == null || confirm == "") {
+		alert("Password를 입력하세요.");
+		return false;
+	} else if(Password != confirm) {
+		alert("Password가 일치하지 않습니다.");
+		return false;
+	} else if(UserName == null || UserName == "") {
+		alert("Name을 입력하세요.");
+		return false;
+	}  else {
+	
+		data.id = user_id;
+		data.password = Password;
+		data.name = UserName;
+	
+		$.ajax({
+			url : "/user/join",
+			type : "post",
+			data : data,
+			success : function(result) {
+				alert("회원가입이 되었습니다");
+				location = "/main";
+			},
+			error : function(error) {
+				alert("회원가입에 실패 하였습니다. 정보를 다시 확인해주세요.");
+				location = "/join";
+			}
+		});
+	}
+}
+</script>
+</head>
+<body>
+	<h1><a href="/main">Join page</a></h1>
+	
+	<div class="container">
+	  <h2>회원가입</h2>
+	  <form action="/action_page.php" class="was-validated" >
+	    <div class="form-group">
+	      <label for="UserID">UserID:</label>
+	      <input type="text" class="form-control" id="UserID" placeholder="ID입력란" name="UserID" autocomplete="off" required="required">
+	    </div>
+	    
+	    <div class="form-group">
+	      <label for="Password">UserPassword:</label>
+	      <input type="password" class="form-control" id="Password" placeholder="Password 입력란" autocomplete="off" name="Password" >   
+	    </div>
+	    
+	    <div class="form-group">
+	      <label for="confirm">Password confirm:</label>
+	      <input type="password" class="form-control" id="confirm" placeholder="Password 재확인 입력란" autocomplete="off" name="confirm" >
+	    </div>
+	    
+	    <div class="form-group">
+	      <label for="UserName">UserName:</label>
+	      <input type="text" class="form-control" id="UserName" placeholder="이름 입력란" autocomplete="off" name="UserName" >
+	    </div>
+	    
+	    <%--
+	    <div class="form-group form-check">
+	      <label class="form-check-label">
+	        <input class="form-check-input" type="checkbox" name="remember" required> I agree on blabla.
+	 
+	      </label>
+	    </div>
+	    --%>
+	    
+	    <button type="button" class="btn btn-primary" onclick="join();">Submit</button>
+	  </form>
+	</div>
+
+</body>
+</html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+
+VO
+
+
+
+package com.example.demo.vo;
+
+public class ProjectUserVO {
+
+	private int num;
+	private String id;
+	private String password;
+	private String name;
+	private String pw;
+	
+	public ProjectUserVO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPw() {
+		return pw;
+	}
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+
+	
+	
+	
+}
+
+
+
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+
+Mapper
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.demo.project.ProjectMapper">
+
+	<insert id="insertUser" parameterType="com.example.demo.vo.ProjectUserVO">
+	 	INSERT INTO users VALUES (NULL, #{name}, #{id}, SHA(#{password}))
+	</insert>
+	
+	
+	<select id="loginUser" resultType="com.example.demo.vo.ProjectUserVO">
+		SELECT id FROM users WHERE id = #{id} AND password = SHA(#{password})
+		<!-- DB에서 id를 읽는데 WHERE(조건문) id = id가 일치할때 pw = pw가 일치할때	 -->
+	</select>
+	
+	
+	<select id="getUserById" resultType="com.example.demo.vo.ProjectUserVO">
+		SELECT num,id,password,name
+		FROM users
+		WHERE num = #{num}
+	</select>
+	
+	
+	<insert id="updateUser" parameterType="com.example.demo.vo.ProjectUserVO">
+		UPDATE users
+		SET password=#{password}, name=#{name}
+		WHERE num= #{num}
+	</insert>
+	
+	
+	<delete id="deleteUser" parameterType="Integer">
+		DELETE FROM users WHERE num = #{num}	
+	</delete>
+	
+	
+
+</mapper> 
+
+
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+interface
+
+
+
+package com.example.demo.project;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.demo.vo.FreeboardVO;
+
+@Mapper
+public interface FreeboardMapper {
+
+	
+		int insertBoard(FreeboardVO f);
+		
+		int addAndGetKey(FreeboardVO f);
+		
+		FreeboardVO getBoardById(int num);
+		
+		List<FreeboardVO> getBoardList();
+		
+		int updateBoard(FreeboardVO f);
+
+		int deleteBoard(int num);
+		
+
+	
+	
+}
+
