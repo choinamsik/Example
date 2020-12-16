@@ -1,0 +1,25 @@
+ex)
+ data([[1,2,3]
+        [4,5,6])
+  np.save('save_data',data)
+
+np.save('파일명',npy) >>> 저장하는 방법
+arr = np.load('파일명',npy)  >>> 저장한걸 읽어들이는 방법
+
+
+ex)
+   numpy를 이용하여 임의의 정수 행렬(4x4)를 생성하고 화면에 표시한다 그 행렬을 파일에 저장한 후에 다시 로드하여 다시 화면에 표시한다.
+   import numpy as np
+   
+   a = np.arange(0,16).reshape(4,4)
+   np.save('save_array',a)
+   b = np.load('save_array.npy')
+   print(b)
+   
+   
+   
+   
+ csv 파일 저장
+ 
+ ex)
+ data = np.genfromtxt('ch_3data.csv', delimiter=',' , names=True)  True는 구조체 배열이 있다는 의미
