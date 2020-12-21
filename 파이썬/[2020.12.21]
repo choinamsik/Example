@@ -317,3 +317,16 @@ can write directly on the file that will be called myFrame.html:
 
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
+
+>>> s = ['<HTML>']                                         # 리스트에 원소하나 넣고 
+>>> s.append('<HEAD><TITLE>My DataFrame</TITLE></HEAD>')   # 리스트 뒤에 append 로 추가한다.
+>>> s.append('<BODY>')
+>>> s.append(mdf.to_html())     # 테이블 태그를 넣
+>>> s.append('</BODY></HTML>')
+>>> html = ' '.join(s)  
+
+>>> html_file = open('myFrame.html','w')
+>>> html_file.write(html)
+>>> html_file.close()
+
+
