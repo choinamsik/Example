@@ -1,0 +1,319 @@
+import numpy as np
+import pandas as pd
+
+
+# 선생님코드
+# 선생님코드
+# 선생님코드
+
+
+men = [
+    [11,'Landon',10,2000,'010-7458-8965'],
+    [12,'Lee',20,3000,'010-7458-8965'],
+    [13,'Poi',30,4000,'010-7458-8965'],
+    [14,'word',40,5000,'010-7458-8965'],
+    [15,'Jand',50,6000,'010-7458-8965'],
+]
+
+
+mdf = pd.DataFrame(mem, columns=['No','이름','부서','급여','전화']
+mdf.index = mdf['No']
+mdf
+
+def findByNo(eno):
+    emp = mdf.loc[eno]
+    print('-------------------------------')
+    print(emp)
+
+def findByNM(nm):
+    emp = mdf[mdf['이름']==nm]
+    print('---------------------------')
+    print(emp)
+    
+def add_row(indata):
+    global mdf
+    no,nm,dept,sal,phone = indata.split(',')                           # indata의 컬럼들을 ,로 구분짓는다.
+    arr = np.array([int(no),nm,int(dept),int(sal),phone]).reshape(1,5) # 데이터프레임에 한 행을 추가 
+    tmp = pd.DataFrame(arr,index=[int(no)],                            # 새로 추가할 데이터프레임을 한 행을 새로 만는다.
+        columns=['No','이름','부서','급여','전화'])
+    mdf = pd.concat([mdf,tmp])                                         # concat을 사용하면 두 개의 데이터프레임을 합칠 수 있다.
+    
+def updata_salary(eno, sal):
+    mdf.loc[eno,'급여'] = sal                                          # eno는 인덱스 라벨이며 행과 열을 선택하여 sal에 넣는다. 
+    
+def delete_row(eno):
+    global mdf
+    mdf = mdf.drop(index=eno)                                          # 해당 행을 삭제(drop)  (eno는덱스 )
+                   
+while True:
+    print('----------------------------------------')
+    print(mdf)
+    print('----------------------------------------')
+    menu = input('목록(s), 검색(f), 추가(a), 수정(u), 삭제(x), 종료(x):\n')
+    if menu=='f':
+        fmenu = input('번호로 검색(n), 이름으로 검색(m):')
+        if fmenu=='n':
+            eno = int(input('번호:'))
+            findByNo
+        elif fmenu=='m':
+            nm = input('이름:')
+            findByNm(nm)
+    elif menu=='a':
+        indata = input('번호,이름,부서,급여,전화:')
+        add_row(indata)
+    elif menu=='u':
+        eno = int(input('변견대상 사원번호:'))
+        sal = int(input('새 급여액'))
+        update_salary(eno,sal)
+    elif menu=='d':
+       eno = int(input('삭제할 사원번호:'))
+       delete_row(eno)
+    break menu=='x':
+       print('종료')
+else:
+print('프로그램 종료')
+
+                   
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+
+# 앞서 작성된 예제의 DataFrame 오브젝트를 
+# 파일에 저장하여 다음 작업에 활용하세요.
+# 키보드에서 전달된 한 행의 데이터를 받아서 
+# 임시 DataFrame 을 생성하여 리턴하는 함수 작성/활용
+
+
+#선생님코드
+#선생님코드
+#선생님코드
+
+men = [
+    [11,'Landon',10,2000,'010-7458-8965'],
+    [12,'Lee',20,3000,'010-7458-8965'],
+    [13,'Poi',30,4000,'010-7458-8965'],
+    [14,'word',40,5000,'010-7458-8965'],
+    [15,'Jand',50,6000,'010-7458-8965'],
+]
+
+
+mdf = pd.DataFrame(mem, columns=['No','이름','부서','급여','전화']
+mdf.index = mdf['No']
+emp_frame = to.csv('emp_frame'.mdf)
+                   
+                   
+                   
+mdf = None 
+
+def load_csv(filename):
+    global mdf
+    mdf = pd.raed.csv(filename)
+    mdf.index=mdf['No']
+    print(mdf)
+
+def save_csv(df):
+    df.to_csv('emp_frame.csv', index=False)
+    print('파일에 저장 성공')
+                   
+def findByNo(eno):
+    emp = mdf.loc[eno]
+    print('------------------------------------')
+                   
+def add_row(indata):
+    global mdf
+    tmp = df_from_str(indata)           # 이 곳이 df_from_str를 호출하는 부분
+    mdf = pd.concat([mdf,tmp])
+    save_csv(mdf)
+                   
+def df_from_str(indata):
+    no,nm,dept,sal,phone = indata.split(',')
+    arr = np.array([int(no),nm,int(dept),int(sal),phone]),reshape(1,5)
+    tmp = pd.DataFrame(arr,index=[int(no)])
+
+def updata_salary(indata):
+    mdf.loc[eno,'급여'] = sal
+    save_csv(mdf)
+                   
+def delete_row(eno):
+    global mdf
+    mdf = mdf.drop(index=eno)
+    save_csv(mdf)
+                   
+while True:
+    print('----------------------------------------')
+    load_csv('emp_frame.csv')
+    print('----------------------------------------')
+    menu = input('목록(s), 검색(f), 추가(a), 수정(u), 삭제(x), 종료(x):\n')
+    if menu=='f':
+        fmenu = input('번호로 검색(n), 이름으로 검색(m):')
+        if fmenu=='n':
+            eno = int(input('번호:'))
+            findByNo
+        elif fmenu=='m':
+            nm = input('이름:')
+            findByNm(nm)
+    elif menu=='a':
+        indata = input('번호,이름,부서,급여,전화:')
+        add_row(indata)
+    elif menu=='u':
+        eno = int(input('변경대상 사원번호:'))
+        sal = int(input('새 급여액'))
+        update_salary(eno,sal)
+    elif menu=='d':
+       eno = int(input('삭제할 사원번호:'))
+       delete_row(eno)
+    break menu=='x':
+       print('종료')
+else:
+print('프로그램 종료')                
+
+                   
+                   
+# df = pd.read_csv('filename.csv') 애초에 데이터프레임이 없으니깐 읽어서 데이터프레임을 생성하라
+# df.to.csv(filename.csv')이 데이터프레임을 csv에 저장하라
+                   
+                   
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+# 기본 예제
+# pd.read_table('ch05_06.txt',sep=',',skiprows=[0,1,3,6])
+# white red blue green animal
+# 0 1 5 2 3 cat
+# 1 2 7 8 5 dog
+# 2 3 3 6 7 horse
+# 3 2 2 8 3 duck
+# 4 4 4 2 1 mouse
+
+pd.read_csv('ch05_02.csv',skiprows=[2],nrows=3,header=None)
+0 1 2 3 4
+0 1 5 2 3 cat
+1 2 7 8 5 dog
+2 2 2 8 3 duck
+# 2개의 행은 스킵하고 3개의 행만 읽어오고 컬럼은 없고
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+>>> out = pd.Series()
+>>> i = 0
+>>> pieces = pd.read_csv('ch05_01.csv',chunksize=3)
+>>> for piece in pieces:
+... out.set_value(i,piece['white'].sum())
+... i = i + 1
+...
+0 6
+
+# 시리즈가 없는 >>> out 
+# 'ch05_01.csv',chunksize=3 
+#  ch05_01.csv 만약 이 파일이 엄청나가 길다면 chunksize=3 이 뜻은 3개로 쪼개서 가져온다는 의미이다. 
+# pieces <<< 3/1이 된다. pieces(데이터프레임) 다음으로는 컬럼,슬라이스,블리언 중 이번에는 [컬럼] ['white']고 
+# 3조각의 합계가 들어있다.
+
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+
+>>> frame = pd.DataFrame(np.arange(16).reshape((4,4)),
+index = ['red', 'blue', 'yellow', 'white'],
+columns = ['ball', 'pen', 'pencil', 'paper'])
+>>> frame.to_csv('ch05_07.csv')
+
+>>> frame3 = pd.DataFrame([[6,np.nan,np.nan,6,np.nan],
+... [np.nan,np.nan,np.nan,np.nan,np.nan],
+... [np.nan,np.nan,np.nan,np.nan,np.nan],
+... [20,np.nan,np.nan,20.0,np.nan],
+... [19,np.nan,np.nan,19.0,np.nan]
+... ],
+... index=['blue','green','red','white','yellow'],
+columns=['ball','mug','paper','pen','pencil'])
+
+>>> frame3
+ball mug paper pen pencil
+blue 6.0 NaN NaN 6.0 NaN
+green NaN NaN NaN NaN NaN
+red NaN NaN NaN NaN NaN
+white 20.0 NaN NaN 20.0 NaN
+yellow 19.0 NaN NaN 19.0 NaN
+
+
+# 읽어오면서 NaN값에 값을 넣어 대체해서 가져오라는듯.
+>>> frame3.to_csv('ch05_09.csv', na_rep ='NaN')
+Listing 5-10. ch05_09.csv
+,ball,mug,paper,pen,pencil
+blue,6.0,NaN,NaN,6.0,NaN
+green,NaN,NaN,NaN,NaN,NaN
+red,NaN,NaN,NaN,NaN,NaN
+white,20.0,NaN,NaN,20.0,NaN
+yellow,19.0,NaN,NaN,19.0,NaN
+
+
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+Reading and Writing HTML Files
+Writing Data in HTML
+
+>>> frame = pd.DataFrame(np.arange(4).reshape(2,2))
+
+print(frame.to_html())
+<table border="1" class="dataframe">
+    <thead>
+        <tr style="text-align: right;">
+            <th></th>
+            <th>0</th>
+            <th>1</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <th>0</th>
+            <td> 0</td>
+            <td> 1</td>
+        </tr>
+        <tr>
+            <th>1</th>
+            <td> 2</td>
+            <td> 3</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+
+>>> frame = pd.DataFrame( np.random.random((4,4)),
+... index = ['white','black','red','blue'],
+... columns = ['up','down','right','left'])
+>>> frame
+up down right left
+white 0.292434 0.457176 0.905139 0.737622
+black 0.794233 0.949371 0.540191 0.367835
+red 0.204529 0.981573 0.118329 0.761552
+blue 0.628790 0.585922 0.039153 0.461598
+
+
+>>> s = ['<HTML>']                                         # 리스트에 원소하나 넣고 
+>>> s.append('<HEAD><TITLE>My DataFrame</TITLE></HEAD>')   # 리스트 뒤에 append 로 추가한다.
+>>> s.append('<BODY>')
+>>> s.append(frame.to_html())     # 테이블 태그를 넣
+>>> s.append('</BODY></HTML>')
+>>> html = ".join(s)             
+# 쌍 따움표가 아니라 홑따움표 2개이고,  뜻은 문자열 객체에다가 포함시켜라 s는 list이고 list안에는 HTML코드가 들어있따 table코드하고
+# 즉.List안에 있는 모든것들을 문자열로 나타내라는 뜻. 문자열화 하라는뜻.
+
+
+
+Now that all the listing of the HTML page is contained within the html variable, you
+can write directly on the file that will be called myFrame.html:
+
+# 브라우저에서 화면에 출력되는 것은 html으로 보내줄 것을 요청하는데 html을 열려면 파일이 되어야한다. 
+# 아래는 html을 파일화 하는것 
+>>> html_file = open('myFrame.html','w')
+>>> html_file.write(html)
+>>> html_file.close()
+
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
