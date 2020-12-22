@@ -1,0 +1,36 @@
+package com.example.demo;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+
+public class sadf {
+
+	public static void main(String[] args) {
+		try {
+			ProcessBuilder processbuilder = new ProcessBuilder("python","C:\\Users\\tjoeun\\Documents\\Python Projects\\ex.py").inheritIO();
+			Process process = processbuilder.start();
+			process.waitFor();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			
+			String line = null;
+			
+			while((line = br.readLine()) != null) {
+				System.out.println(line);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+}
+
+
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+
+파이썬 아나콘다에서 Text파일에서 py파일을 만든 후 그 모듈을 가져와서 그래프로 시각화 하는 방법 그래프가 아니더라도 텍스트도 가능하다 
+예를 들어 py파일안에 들은 연산자도 출력이 가능하다.  
